@@ -1,7 +1,6 @@
 "use client";
 import { Button, Callout, TextArea, TextField } from '@radix-ui/themes'
 import { useForm, Controller } from 'react-hook-form';
-import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import dynamic from 'next/dynamic';
 import axios from 'axios';
@@ -14,6 +13,8 @@ interface DiaryForm {
   description : string;
 }
 
+const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false });
+
 
 
 const NewDiaryPage = () => {
@@ -21,8 +22,7 @@ const NewDiaryPage = () => {
   const { register, control, handleSubmit} = useForm<DiaryForm>();
   const [error, setError] = useState('');
 
-
-
+ 
   return (
   <div className='max-w-xl space-y-3'> 
     {error && ( <Callout.Root color = "red">
@@ -33,7 +33,8 @@ const NewDiaryPage = () => {
      onSubmit={handleSubmit(async (data) => {
       try {
         await axios.post('/api/internshipDiary', data)
-        router.push('/internshipDiary')
+        router.push('/internshipDiary') 
+        console.log("yüklendi")
       
       } catch (error) {
         setError("invalid title or description")
