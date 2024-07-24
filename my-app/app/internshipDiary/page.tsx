@@ -36,7 +36,7 @@ const InternshipDiary = () => {
   }
 
   return (
-    <div className="max-w-xl space-y-3">
+    <div className="items-center max-w-xl space-y-3">
       <h1>Internship Diaries</h1>
       {diaries.length === 0 ? (
         <p>No diaries found.</p>
@@ -50,6 +50,7 @@ const InternshipDiary = () => {
       )}
       <Button><Link href='/internshipDiary/new'>New Diary</Link></Button>
     </div>
+    
   );
 };
 

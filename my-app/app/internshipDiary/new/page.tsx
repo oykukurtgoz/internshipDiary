@@ -24,12 +24,13 @@ const NewDiaryPage = () => {
 
  
   return (
-  <div className='max-w-xl space-y-3'> 
-    {error && ( <Callout.Root color = "red">
-      <Callout.Text>{error}</Callout.Text>
-    </Callout.Root>
-    )}
-    <form 
+  <div className='relative flex items-center justify-center'> 
+      <div className='max-w-xl space-y-3 bg-white p-6 border shadow-lg relative'>
+        {error && ( <Callout.Root color = "red">
+          <Callout.Text>{error}</Callout.Text>
+        </Callout.Root>
+        )}
+    <form
      onSubmit={handleSubmit(async (data) => {
       try {
         await axios.post('/api/internshipDiary', data)
@@ -39,9 +40,9 @@ const NewDiaryPage = () => {
       } catch (error) {
         setError("invalid title or description")
       }
-     })}>
-      <TextField.Root placeholder= 'Title' {...register('title')}>        
-      </TextField.Root>
+     })} className='flex flex-col gap-4'>
+      <TextField.Root placeholder= 'Title' {...register('title')}>      
+      </TextField.Root >
       <Controller
       name = "description"
       control={control}
@@ -49,6 +50,7 @@ const NewDiaryPage = () => {
       />
       <Button>Save new Diary</Button>
     </form>
+    </div>
   </div>   
   )
 }

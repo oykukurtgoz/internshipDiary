@@ -1,28 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { number, z } from 'zod';
 import prisma from "@/prisma/client"
+import { TaskState } from "@prisma/client";
 
-const createInternshipDiarySchema = z.object({
+const createTaskSchema = z.object({
     title: z.string().min(1, 'Title is required').max(255),
-    description: z.string().min(1, 'Description is required')
+    taskState: z.enum(['TODO', 'INPROGRESS', 'DONE'])
 })
 
     export async function POST(request: NextRequest){
         const body = await request.json();
-        const validation = createInternshipDiarySchema.safeParse(body)
+        const validation = createTaskSchema.safeParse(body)
         if (!validation.success)
             return NextResponse.json(validation.error.format(), {status : 400})
         
-        const newInternshipDiary = await prisma.internshipdb.create({
-            data: { title: body.title, description: body.description }
+        const newCreateTaskSchema = await prisma.task.create({
+            data: { title: body.title, taskState: body.taskState }
         })
-        return NextResponse.json(newInternshipDiary, { status: 201 })
+        return NextResponse.json(newCreateTaskSchema, { status: 201 })
     }
 
     export async function GET(request: NextRequest) {
         try {
-            const diaries = await prisma.internshipdb.findMany();
-            return NextResponse.json(diaries, { status: 200 });
+            const tasks = await prisma.task.findMany();
+            return NextResponse.json(tasks, { status: 200 });
         } catch (error) {
             console.error(error);
             return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
@@ -30,7 +31,7 @@ const createInternshipDiarySchema = z.object({
     }
 
 export async function DELETE(request: NextRequest,{ params }: { params: { id: number } }) {
-    const res = await prisma.internshipdb.delete({
+    const task = await prisma.task.delete({
         where: {
             id : Number(params.id)
         }
