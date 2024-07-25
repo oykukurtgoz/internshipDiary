@@ -46,11 +46,12 @@ const TaskPage = () => {
   const deleteTask = async (taskId: number) => {
     console.log("taskId:", taskId);
     try {
-        const res = await axios.delete(`/api/task/${taskId}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+      const res = await axios.delete(`/api/task/${taskId}`, {
+          data: { taskId: taskId },
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
         console.log(res);
         if (res.status === 200) {
             setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));

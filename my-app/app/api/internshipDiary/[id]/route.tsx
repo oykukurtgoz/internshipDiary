@@ -2,21 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from "@/prisma/client"
 
 export async function DELETE(request: NextRequest) {
-    const { taskId } = await request.json();
+  
+    const { diaryId } = await request.json();
 
-
-    if (!taskId) {
-        return NextResponse.json({ error: 'Task ID is required' }, { status: 400 });
+    if (!diaryId) {
+        return NextResponse.json({ error: 'Diary ID is required' }, { status: 400 });
     }
-    console.log(taskId, "taskId");
+    console.log(diaryId, "diaryId");
 
     try {
-        const deletedTask = await prisma.task.delete({
+        const deletedDiary = await prisma.internshipdb.delete({
             where: {
-                id: taskId,
+                id: diaryId,
             },
         });
-        return NextResponse.json(deletedTask, { status: 200 });
+        return NextResponse.json(deletedDiary, { status: 200 });
     } catch (error) {
         console.error('Failed to delete task:', error);
         return NextResponse.json({ error: 'Failed to delete task' }, { status: 500 });

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { number, z } from 'zod';
 import prisma from "@/prisma/client"
-import { TaskState } from "@prisma/client";
 
 const createTaskSchema = z.object({
     title: z.string().min(1, 'Title is required').max(255),
@@ -30,10 +29,3 @@ const createTaskSchema = z.object({
         }
     }
 
-export async function DELETE(request: NextRequest,{ params }: { params: { id: number } }) {
-    const task = await prisma.task.delete({
-        where: {
-            id : Number(params.id)
-        }
-    })
-}

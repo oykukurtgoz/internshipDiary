@@ -29,10 +29,3 @@ const createInternshipDiarySchema = z.object({
         }
     }
 
-export async function DELETE(request: NextRequest,{ params }: { params: { id: number } }) {
-    const res = await prisma.internshipdb.delete({
-        where: {
-            id : Number(params.id)
-        }
-    })
-}
