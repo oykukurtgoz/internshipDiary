@@ -18,7 +18,29 @@ export async function DELETE(request: NextRequest) {
         });
         return NextResponse.json(deletedDiary, { status: 200 });
     } catch (error) {
-        console.error('Failed to delete task:', error);
-        return NextResponse.json({ error: 'Failed to delete task' }, { status: 500 });
+        console.error('Failed to delete diary:', error);
+        return NextResponse.json({ error: 'Failed to delete diary' }, { status: 500 });
+    }
+}
+
+export async function PATCH(request: NextRequest) {
+    const body = await request.json();
+    
+    if (!body.data.diaryId) {
+        return NextResponse.json({ error: 'Diary ID is required' }, { status: 400 });
+    }
+
+    try {
+        const updatedDiary = await prisma.internshipdb.update({
+            where: { id: body.data.diaryId },
+            data: {
+                title: body.data.title,
+                description: body.data.description
+            }
+        });
+        return NextResponse.json(updatedDiary, { status: 200 });
+    } catch (error) {
+        console.error('Failed to update diary:', error);
+        return NextResponse.json({ error: 'Failed to update diary' }, { status: 500 });
     }
 }

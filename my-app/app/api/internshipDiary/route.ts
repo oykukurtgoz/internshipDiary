@@ -14,7 +14,10 @@ const createInternshipDiarySchema = z.object({
             return NextResponse.json(validation.error.format(), {status : 400})
         
         const newInternshipDiary = await prisma.internshipdb.create({
-            data: { title: body.title, description: body.description }
+            data: { 
+                title: body.title, 
+                description: body.description 
+            }
         })
         return NextResponse.json(newInternshipDiary, { status: 201 })
     }
@@ -29,3 +32,4 @@ const createInternshipDiarySchema = z.object({
         }
     }
 
+   
