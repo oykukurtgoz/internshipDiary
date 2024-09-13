@@ -22,7 +22,7 @@
     "react-hook-form": "^7.31.1",
     "easymde": "^2.15.0",
     "axios": "^1.4.0",
-    "react-simplemde-editor": "^6.0.0"
+    "react-simplemde-editor": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
